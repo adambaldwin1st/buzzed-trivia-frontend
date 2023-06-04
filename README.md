@@ -7,6 +7,10 @@ A local Python3 development environment
 
 - Start your virtual environment
 
+Make sure this is in ec2
+```shell
+npm config set legacy-peer-deps true
+```
 ```shell
 source env/bin/activate
 ```
