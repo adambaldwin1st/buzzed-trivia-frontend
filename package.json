@@ -1,42 +1,43 @@
 {
   "name": "buzzed-trivia-frontend",
   "version": "0.1.0",
-  "description": "Trivia website",
-  "main": "src/index.js",
-  "scripts": {
-    "compile": "webpack",
-    "build": "webpack -p",
-    "start": "node server.js"
-  },
-  "keywords": [
-    "react",
-    "webpack",
-    "babel",
-    "minimal",
-    "starter"
-  ],
-  "author": "Adam Baldwin",
-  "license": "to ill",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/adambaldwin1st/buzzed-trivia-frontend"
-  },
+  "private": true,
   "dependencies": {
     "@material-ui/core": "^4.12.4",
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.5",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1",
-    "express": "^4.16.3",
-    "react": "^16.14.0",
-    "react-dom": "^16.14.0",
+    "@material-ui/icons": "^4.11.3",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-google-login": "^5.2.2",
     "react-router-dom": "^6.11.2",
-    "webpack": "^4.16.3",
-    "webpack-dev-middleware": "^3.1.3"
+    "react-scripts": "5.0.1",
+    "typescript": "^5.1.3",
+    "web-vitals": "^2.1.4"
   },
-  "devDependencies": {
-    "@material-ui/icons": "^4.11.3",
-    "@types/react-dom": "^18.2.4"
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
