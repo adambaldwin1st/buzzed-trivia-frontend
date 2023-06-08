@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {Route, Routes, useNavigate} from 'react-router-dom';
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import theme from "./styles/theme"
-import { AppBar, CssBaseline, IconButton, makeStyles, ThemeProvider, Toolbar, Typography, Button } from "@material-ui/core";
-import { Menu as MenuIcon } from '@material-ui/icons';
+import {AppBar, Button, CssBaseline, IconButton, makeStyles, ThemeProvider, Toolbar} from "@material-ui/core";
 import QuestionCenter from "./pages/QuestionCenter";
+import SteinIcon from "./images/icons/SteinIcon";
+import {GoogleLoginResponse, GoogleLoginResponseOffline} from "react-google-login";
+import AlertModal from "./components/AlertModal";
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -27,19 +29,10 @@ const useStyles = makeStyles((theme) => ({
 
 const App: React.FC = () => {
     const classes = useStyles();
-    const [isLoggedIn, setIsLoggedIn] = useState(false); // Add login state here
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false); // Add login state here
+    const [alertModal, setAlertModal] = useState<boolean>(false); // Add login state here
     const navigate = useNavigate(); // Move the useNavigate hook here
 
-    const handleLogin = () => {
-        // Perform login logic here
-        setIsLoggedIn(true);
-        navigate('/login');
-    };
-
-    const handleLogout = () => {
-        // Perform logout logic here
-        setIsLoggedIn(false);
-    };
 
     return (
         <ThemeProvider theme={theme}>
@@ -53,21 +46,30 @@ const App: React.FC = () => {
                             className={classes.menuButton}
                             color="inherit"
                             aria-label="menu"
+                            onClick={() => navigate('/')} // Add onClick handler to navigate to the home page
                         >
-                            <MenuIcon />
+                            <SteinIcon
+                                size={"md"}
+                            />
                         </IconButton>
-                        <div className={classes.title}>
-                            <Typography variant="h6">Buzzed Trivia</Typography>
-                        </div>
+
                         {isLoggedIn ? (
-                            <Button color="inherit" onClick={handleLogout}>
+                            <Button color="inherit" onClick={() => {
+                                setAlertModal(true);
+                            }}>
                                 Logout
                             </Button>
                         ) : (
-                            <Button color="inherit" onClick={handleLogin} className={classes.loginButton}>
-                                Login
+                            <Button color="inherit" onClick={() => {
+                                setAlertModal(true);
+                            }}>
+                                Logout
                             </Button>
                         )}
+                        <AlertModal open={alertModal} onClose={() => {
+                            setAlertModal(false);
+                        }} type={"success"} message={"oops"}
+                        />
                     </Toolbar>
                 </AppBar>
                 <Toolbar /> {/* Add a spacer to push the content below the top bar */}

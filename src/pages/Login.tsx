@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles, Typography, Box } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
 import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
@@ -27,10 +27,51 @@ const useStyles = makeStyles((theme) => ({
 const Login: React.FC = () => {
     const classes = useStyles();
     const navigate = useNavigate();
-    const responseGoogle = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
-        console.log(response);
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(localStorage.getItem('isLoggedIn') === 'true');
+    const responseGoogle = async (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
+        if ('tokenId' in response) {
+            const tokenId = response.tokenId;
+            // Send the tokenId to your server for verification
+            const serverResponse = await fetch('/verifyToken', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ tokenId }),
+            });
+
+            if (serverResponse.ok) {
+                const data = await serverResponse.json();
+                // Verify the audience (client ID) in the server response
+                const { profileObj } = response;
+                const { googleId, email } = profileObj;
+                const expectedClientId = 'your-google-oauth-client-id';
+
+                if (data.aud === expectedClientId && data.sub === googleId) {
+                    // Token is verified and client ID matches
+                    setIsLoggedIn(true);
+                    navigate('/login');
+
+                    localStorage.setItem('isLoggedIn', 'true');
+                } else {
+                    // Invalid client ID or user ID, handle accordingly
+                    console.log('Invalid client ID or user ID');
+                }
+            } else {
+                // Server returned an error, handle accordingly
+                console.log('Token verification failed');
+            }
+        } else {
+            // Handle the case when the response is not of type GoogleLoginResponse
+            console.log('Invalid login response');
+        }
         // You can handle the Google OAuth response here
         navigate('/question-center')
+    };
+
+    const handleLogout = () => {
+        // Perform logout logic here
+        setIsLoggedIn(false);
     };
 
     return (
