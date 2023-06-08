@@ -6,7 +6,6 @@ import theme from "./styles/theme"
 import {AppBar, Button, CssBaseline, IconButton, makeStyles, ThemeProvider, Toolbar} from "@material-ui/core";
 import QuestionCenter from "./pages/QuestionCenter";
 import SteinIcon from "./images/icons/SteinIcon";
-import {GoogleLoginResponse, GoogleLoginResponseOffline} from "react-google-login";
 import AlertModal from "./components/AlertModal";
 
 const useStyles = makeStyles((theme) => ({
@@ -16,14 +15,9 @@ const useStyles = makeStyles((theme) => ({
     menuButton: {
         marginRight: theme.spacing(2)
     },
-    title: {
-        flexGrow: 1,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
     loginButton: {
-        marginLeft: 'auto',
+        marginRight: theme.spacing(2),
+        marginLeft: 'auto'
     },
 }));
 
@@ -46,33 +40,36 @@ const App: React.FC = () => {
                             className={classes.menuButton}
                             color="inherit"
                             aria-label="menu"
-                            onClick={() => navigate('/')} // Add onClick handler to navigate to the home page
+                            onClick={() => navigate('/')}
                         >
                             <SteinIcon
                                 size={"md"}
                             />
                         </IconButton>
 
+                        <div style={{flexGrow: 1}}/>
+
                         {isLoggedIn ? (
-                            <Button color="inherit" onClick={() => {
+                            <Button className={classes.loginButton} color="inherit" onClick={() => {
                                 setAlertModal(true);
                             }}>
                                 Logout
                             </Button>
                         ) : (
-                            <Button color="inherit" onClick={() => {
-                                setAlertModal(true);
+                            <Button className={classes.loginButton} color="inherit" onClick={() => {
+                                navigate('/login');
                             }}>
-                                Logout
+                                Login
                             </Button>
                         )}
+
                         <AlertModal open={alertModal} onClose={() => {
                             setAlertModal(false);
                         }} type={"success"} message={"oops"}
                         />
                     </Toolbar>
                 </AppBar>
-                <Toolbar /> {/* Add a spacer to push the content below the top bar */}
+                <Toolbar />
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/login" element={<Login />} />
