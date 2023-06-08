@@ -4,7 +4,7 @@ import Login from "./pages/Login";
 import Home from "./pages/Home";
 import theme from "./styles/theme"
 import {AppBar, Button, CssBaseline, IconButton, makeStyles, ThemeProvider, Toolbar} from "@material-ui/core";
-import QuestionCenter from "./pages/QuestionCenter";
+import TheHive from "./pages/TheHive";
 import SteinIcon from "./images/icons/SteinIcon";
 import AlertModal from "./components/AlertModal";
 
@@ -23,9 +23,9 @@ const useStyles = makeStyles((theme) => ({
 
 const App: React.FC = () => {
     const classes = useStyles();
-    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false); // Add login state here
-    const [alertModal, setAlertModal] = useState<boolean>(false); // Add login state here
-    const navigate = useNavigate(); // Move the useNavigate hook here
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+    const [alertModal, setAlertModal] = useState<boolean>(false);
+    const navigate = useNavigate();
 
 
     return (
@@ -49,9 +49,11 @@ const App: React.FC = () => {
 
                         <div style={{flexGrow: 1}}/>
 
-                        {isLoggedIn ? (
+                        {sessionStorage.getItem('user') ? (
                             <Button className={classes.loginButton} color="inherit" onClick={() => {
-                                setAlertModal(true);
+                                setIsLoggedIn(false);
+                                sessionStorage.removeItem('user');
+                                navigate('/');
                             }}>
                                 Logout
                             </Button>
@@ -73,7 +75,7 @@ const App: React.FC = () => {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/login" element={<Login />} />
-                    <Route path="/question-center" element={<QuestionCenter />} />
+                    <Route path="/the-hive" element={<TheHive />} />
                 </Routes>
             </div>
         </ThemeProvider>

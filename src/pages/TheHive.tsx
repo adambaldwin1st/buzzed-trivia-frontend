@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const QuestionCenter: React.FC = () => {
+const TheHive: React.FC = () => {
     const classes = useStyles();
     const [questionType, setQuestionType] = useState<QuestionType>(QuestionType.FreeResponse);
     const [question, setQuestion] = useState('');
@@ -142,5 +142,5 @@ const QuestionCenter: React.FC = () => {
     );
 };
 
-export default QuestionCenter;
+export default TheHive;
 
