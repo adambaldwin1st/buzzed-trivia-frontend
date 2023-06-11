@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 const App: React.FC = () => {
     const classes = useStyles();
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-    const [alertModal, setAlertModal] = useState<boolean>(false);
+    const [logoutModal, setLogoutModal] = useState<boolean>(false);
     const navigate = useNavigate();
 
 
@@ -52,6 +52,7 @@ const App: React.FC = () => {
                         {sessionStorage.getItem('user') ? (
                             <Button className={classes.loginButton} color="inherit" onClick={() => {
                                 setIsLoggedIn(false);
+                                setLogoutModal(true);
                                 sessionStorage.removeItem('user');
                                 navigate('/');
                             }}>
@@ -64,10 +65,9 @@ const App: React.FC = () => {
                                 Login
                             </Button>
                         )}
-
-                        <AlertModal open={alertModal} onClose={() => {
-                            setAlertModal(false);
-                        }} type={"success"} message={"oops"}
+                        <AlertModal open={logoutModal} onClose={() => {
+                            setLogoutModal(false);
+                        }} title={"Logout"} type={"success"} message={"You have been logged out."} buttonContent={"Okay"}
                         />
                     </Toolbar>
                 </AppBar>

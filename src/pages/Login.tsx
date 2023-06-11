@@ -30,7 +30,6 @@ const Login: React.FC = () => {
     const classes = useStyles();
     const navigate = useNavigate();
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(localStorage.getItem('isLoggedIn') === 'true');
-    const [alertModal, setAlertModal] = useState<boolean>(false);
 
     const handleLogin = (response: any) => {
         // TODO: replace this with a call to add the user to the database, or fetch existing one
@@ -57,14 +56,6 @@ const Login: React.FC = () => {
                     />
                 </div>
             </Box>
-            <AlertModal
-                open={alertModal}
-                onClose={() => {
-                    setAlertModal(false);
-                }}
-                type={"error"}
-                message={"oof"}
-            />
         </div>
     );
 }

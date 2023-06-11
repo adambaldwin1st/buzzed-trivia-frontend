@@ -1,0 +1,25 @@
+name: Deploy React App
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.BUZZED_TRIVIA_DEPLOY_KEY }}
+
+      - name: Deploying
+        run: |
+          ssh -o "StrictHostKeyChecking=no" {{ secrets.USER }}@{{ secrets.EC2_IP_ADDRESS }} <<'ENDSSH'
+            cd /var/www/html/buzzed-trivia-frontend
+            npm install
+            npm run build
+            sudo systemctl restart nginx
+          ENDSSH
