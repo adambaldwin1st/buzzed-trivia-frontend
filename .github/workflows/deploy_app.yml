@@ -20,6 +20,7 @@ jobs:
           ssh -o "StrictHostKeyChecking=no" ${{ secrets.USER }}@${{ secrets.EC2_IP_ADDRESS }} <<'ENDSSH'
             cd /var/www/html/buzzed-trivia-frontend
             git fetch --all
+            git reset --hard HEAD
             git pull
             npm install
             npm run build
