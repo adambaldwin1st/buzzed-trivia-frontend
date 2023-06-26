@@ -23,7 +23,7 @@ const Home: React.FC = () => {
 
     return (
         <div className={classes.root}>
-            <h1>Welcome to Buzzed Trivia!</h1>
+            <h1>Welcome to Buzzed Trivia! Under Construction</h1>
             <div className={classes.buttonContainer}>
                 <Button className={classes.button} variant="contained" color="primary">
                     Hosted Game
