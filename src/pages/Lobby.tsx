@@ -73,6 +73,7 @@ const Lobby: React.FC = () => {
     useEffect(() => {
         localStorage.setItem('username', name);
         localStorage.setItem('colorIndex', colorIndex.toString());
+        console.log("Values added to local storage");
     }, [name, colorIndex]);
 
     const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
