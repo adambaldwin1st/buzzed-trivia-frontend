@@ -7,6 +7,8 @@ import {AppBar, Button, CssBaseline, IconButton, makeStyles, ThemeProvider, Tool
 import TheHive from "./pages/TheHive";
 import SteinIcon from "./images/icons/SteinIcon";
 import AlertModal from "./components/AlertModal";
+import Lobby from "./pages/Lobby";
+import './styles/grid-overlay.css'; // Import the CSS file
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -29,56 +31,59 @@ const App: React.FC = () => {
 
 
     return (
-        <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <title>Buzzed Trivia</title>
-            <div>
-                <AppBar position="fixed" className={classes.appBar}>
-                    <Toolbar>
-                        <IconButton
-                            edge="start"
-                            className={classes.menuButton}
-                            color="inherit"
-                            aria-label="menu"
-                            onClick={() => navigate('/')}
-                        >
-                            <SteinIcon
-                                size={"md"}
+        <div className={"grid-overlay"} >
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <title>Buzzed Trivia</title>
+                <div>
+                    <AppBar position="fixed" className={classes.appBar}>
+                        <Toolbar>
+                            <IconButton
+                                edge="start"
+                                className={classes.menuButton}
+                                color="inherit"
+                                aria-label="menu"
+                                onClick={() => navigate('/')}
+                            >
+                                <SteinIcon
+                                    size={"md"}
+                                />
+                            </IconButton>
+
+                            <div style={{flexGrow: 1}}/>
+
+                            {sessionStorage.getItem('user') ? (
+                                <Button className={classes.loginButton} color="inherit" onClick={() => {
+                                    setIsLoggedIn(false);
+                                    setLogoutModal(true);
+                                    sessionStorage.removeItem('user');
+                                    navigate('/');
+                                }}>
+                                    Logout
+                                </Button>
+                            ) : (
+                                <Button className={classes.loginButton} color="inherit" onClick={() => {
+                                    navigate('/login');
+                                }}>
+                                    Login
+                                </Button>
+                            )}
+                            <AlertModal open={logoutModal} onClose={() => {
+                                setLogoutModal(false);
+                            }} title={"Logout"} type={"success"} message={"You have been logged out."} buttonContent={"Okay"}
                             />
-                        </IconButton>
-
-                        <div style={{flexGrow: 1}}/>
-
-                        {sessionStorage.getItem('user') ? (
-                            <Button className={classes.loginButton} color="inherit" onClick={() => {
-                                setIsLoggedIn(false);
-                                setLogoutModal(true);
-                                sessionStorage.removeItem('user');
-                                navigate('/');
-                            }}>
-                                Logout
-                            </Button>
-                        ) : (
-                            <Button className={classes.loginButton} color="inherit" onClick={() => {
-                                navigate('/login');
-                            }}>
-                                Login
-                            </Button>
-                        )}
-                        <AlertModal open={logoutModal} onClose={() => {
-                            setLogoutModal(false);
-                        }} title={"Logout"} type={"success"} message={"You have been logged out."} buttonContent={"Okay"}
-                        />
-                    </Toolbar>
-                </AppBar>
-                <Toolbar />
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/the-hive" element={<TheHive />} />
-                </Routes>
-            </div>
-        </ThemeProvider>
+                        </Toolbar>
+                    </AppBar>
+                    <Toolbar />
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/the-hive" element={<TheHive />} />
+                        <Route path="/lobby" element={<Lobby />} />
+                    </Routes>
+                </div>
+            </ThemeProvider>
+        </div>
     );
 }
 

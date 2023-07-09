@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles, Button } from '@material-ui/core';
+import {Link} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -25,9 +26,11 @@ const Home: React.FC = () => {
         <div className={classes.root}>
             <h1>Welcome to Buzzed Trivia! Under Construction</h1>
             <div className={classes.buttonContainer}>
-                <Button className={classes.button} variant="contained" color="primary">
-                    Hosted Game
-                </Button>
+                <Link to={"/lobby"}>
+                    <Button className={classes.button} variant="contained" color="primary">
+                        Hosted Game
+                    </Button>
+                </Link>
                 <Button className={classes.button} variant="contained" color="primary">
                     Un-Hosted Game
                 </Button>
