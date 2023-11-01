@@ -2,6 +2,7 @@
   "version": "0.1.0",
   "name": "buzzed-trivia-frontend",
   "private": true,
+  "homepage": "https://adambaldwin1st.github.io/buzzed-trivia-frontend",
   "eslintConfig": {
     "extends": [
       "react-app",
